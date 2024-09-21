@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StockAlert.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">products</a> &gt; <a href="index.source.html" class="el_package">edu.eci.cvds</a> &gt; <span class="el_source">StockAlert.java</span></div><h1>StockAlert.java</h1><pre class="source lang-java linenums">package edu.eci.cvds;
+
+import edu.eci.cvds.Observer;
+import edu.eci.cvds.Product;
+
+/**
+ * Agente que notifica la cantidad en stock de un producto cuando se actualiza y hay en stock menos de 5.
+ */
+<span class="fc" id="L9">public class StockAlert implements Observer {</span>
+    private boolean notified; //Dice si se notificó el último producto actualizado
+    @Override
+    /**
+     * Notifica cuando un producto se actualiza y hay menos de 5 en stock
+     */
+    public void update(Product product){
+<span class="fc" id="L16">        int inStock = product.getQuantity();</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        if (inStock &lt; 5){</span>
+<span class="fc" id="L18">            System.out.println(&quot;ALERT!!! The stock of the Product: &quot;+ product.getName() + &quot;is very low, only  &quot;+ inStock+ &quot; units left&quot;);</span>
+<span class="fc" id="L19">            setNotified(true);</span>
+        }else{
+<span class="fc" id="L21">            setNotified(false);</span>
+        }
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Cambia el estado de notificacion del ultimo producto
+     * @param wasNotified nuevo estado de notificacion
+     */
+    public void setNotified(boolean wasNotified){
+<span class="fc" id="L30">        this.notified = wasNotified;</span>
+<span class="fc" id="L31">    }</span>
+    /**
+     * Retorna el estado de notificacion del ultimo producto
+     */
+    public boolean getNotified(){
+<span class="fc" id="L36">        return notified;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

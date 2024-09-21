@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">products</a> &gt; <a href="index.source.html" class="el_package">edu.eci.cvds</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">package edu.eci.cvds;
+import java.util.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+/**
+ * Representacion de un producto con su nombre, precio, cantidad en stock, categoria y agentes interesados
+ */
+@Document(collection = &quot;products&quot;)
+public class Product {
+    private ArrayList&lt;Observer&gt; observers;
+    @Id
+    private String name;
+    private int price;
+    private int quantity;
+    private String category;
+
+    /**
+     * Crea un nuevo producto
+     * @param newName   nombre del producto
+     * @param newPrice  precio del producto
+     * @param newQuantity cantidad del producto
+     * @param newCategory categoria del producto
+     */
+<span class="fc" id="L25">    public Product(String newName, int newPrice, int newQuantity, String newCategory){</span>
+<span class="fc" id="L26">        this.name = newName;</span>
+<span class="fc" id="L27">        this.price = newPrice;</span>
+<span class="fc" id="L28">        this.quantity = newQuantity;</span>
+<span class="fc" id="L29">        this.category = newCategory;</span>
+<span class="fc" id="L30">        this.observers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Retorna el nombre del producto
+     */
+    public String getName(){
+<span class="fc" id="L37">        return name;</span>
+    }
+    /**
+     * Retorna la cantidad en stock del producto
+     */
+    public int getQuantity(){
+<span class="fc" id="L43">        return quantity;</span>
+    }
+
+    /**
+     * Actualiza la cantidad en stock del producto
+     * @param newQuantity nueva cantidad del producto
+     */
+    public void setQuantity(int newQuantity){
+<span class="fc" id="L51">        this.quantity = newQuantity;</span>
+<span class="fc" id="L52">        notifyObservers();</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Agrega un nuevo observador para el producto (Patron de diseño)
+     * @param newObserver nuevo observador del producto
+     */
+    public void addObserver(Observer newObserver){
+<span class="fc" id="L60">        observers.add(newObserver);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Elimina un observador del producto (Patron de diseño)
+     * @param observer observador del producto
+     */
+    public void removeObserver(Observer observer){
+<span class="nc" id="L68">        observers.remove(observer);</span>
+<span class="nc" id="L69">    }</span>
+
+    /**
+     * Notifica a los observadores que hubo un cambio en el objeto
+     */
+    private void notifyObservers(){
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (Observer observer : observers) {</span>
+<span class="fc" id="L76">            observer.update(this);</span>
+<span class="fc" id="L77">        }</span>
+<span class="fc" id="L78">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
